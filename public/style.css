@@ -1,0 +1,256 @@
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #007bff, #00b4d8);
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar-brand {
+            color: #fff !important;
+            font-weight: 700;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: #2d3436;
+        }
+
+        .navbar-nav .nav-link {
+            color: #333;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            margin: 0 0.2rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            background: #f8f9fa;
+            color: #007bff;
+        }
+
+
+        header {
+            color: white;
+            text-align: center;
+            padding: 130px 20px 100px 20px;
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            animation: fadeInDown 1.5s ease;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            opacity: 0.9;
+            animation: fadeInUp 1.5s ease;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 120px 20px 80px;
+        }
+
+        .btn-custom {
+            background-color: white;
+            color: #007bff;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn-custom:hover {
+            background-color: #0056b3;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .btn-primary {
+            padding: 0.75rem;
+            font-weight: 600;
+            border-radius: 8px;
+        }
+
+        .btn-outline-primary {
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+        }
+
+        .section {
+            background-color: white;
+            border-radius: 15px;
+            margin: 40px auto;
+            padding: 60px 20px;
+            text-align: center;
+            width: 90%;
+            max-width: 1000px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            animation: fadeIn 1.2s ease;
+        }
+
+        .section h2 {
+            font-weight: 700;
+            color: #007bff;
+        }
+
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+        }
+
+        .card-body {
+            background: white;
+            border-radius: 15px;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .footer {
+            background-color: rgba(255,255,255,0.15);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 50px;
+        }
+
+        .form-control {
+            padding: 0.75rem;
+            border-radius: 8px;
+        }
+
+        .form-control:focus {
+            box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+        }
+
+        
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(20px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        @keyframes fadeInDown {
+            from {opacity: 0; transform: translateY(-30px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        @keyframes fadeInUp {
+            from {opacity: 0; transform: translateY(30px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        @media (max-width: 991px) {
+            .navbar-nav {
+            padding: 1rem 0;
+        }
+            .navbar-nav .nav-link {
+            padding: 0.5rem 0;
+        }
+        } 
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #e3f2fd, #bbdefb);
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #1565c0;
+        }
+        .navbar-brand {
+            font-weight: 700;
+            color: white !important;
+            font-size: 1.4rem;
+        }
+        .nav-link {
+            color: white !important;
+            font-weight: 500;
+            margin-right: 15px;
+        }
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            text-align: center;
+            color: #0d47a1;
+        }
+        .hero h1 {
+            font-weight: 700;
+            font-size: 2.5rem;
+        }
+        .hero p {
+            color: #37474f;
+            font-size: 1.1rem;
+        }
+
+        /* Buttons */
+        .btn-custom {
+            border-radius: 25px;
+            padding: 10px 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-custom:hover {
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 80px;
+            padding: 20px 0;
+            background-color: #1565c0;
+            color: white;
+            text-align: center;
+        }
+
+        /* Card Section */
+        .info-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .info-card:hover {
+            transform: translateY(-5px);
+        }
+        .info-icon {
+            font-size: 40px;
+            color: #1565c0;
+            margin-bottom: 10px;
+        }
+
