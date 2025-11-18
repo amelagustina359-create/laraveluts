@@ -8,14 +8,14 @@ use Illuminate\Http\Request;
 
 class TanggapanController extends Controller
 {
-    // public function index()
-    // {
-    //     // ambil semua data dari model Pengaduan
-    //     $pengaduan = Pengaduan::all();
+    public function index()
+    {
+        // ambil semua tanggapan beserta pengaduannya (jika ada)
+        $tanggapan = Tanggapan::with('pengaduan')->get();
 
-    //     // kirim data ke view
-    //     return view('pengaduan.index', compact('pengaduan'));
-    // }
+        // kirim data ke view tanggapan.index
+        return view('tanggapan.index', compact('tanggapan'));
+    }
     public function create($id)
     {
         $pengaduan = Pengaduan::findOrFail($id);

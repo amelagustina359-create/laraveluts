@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\PengaduanController;
 
+use App\Http\Controllers\TanggapanController;
+
 use App\Http\Controllers\MasyarakatController;
 
 Route::resource('masyarakat', MasyarakatController::class);
@@ -32,10 +34,17 @@ Route::get('/pengaduan/tata-cara', function () {
 
 Route::resource('pengaduan', PengaduanController::class);
 
+// Resource routes for tanggapan
+Route::resource('tanggapan', TanggapanController::class);
+
 
 // ...existing code...
 Route::get('/about', function () {
     return view('about');
 })->name('about');
+// Contact page
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
 // ...existing code...
 
