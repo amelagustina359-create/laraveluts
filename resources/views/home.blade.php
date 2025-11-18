@@ -101,8 +101,8 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link active" href="{{ url('/home') }}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('/daftar-pengaduan') }}">Daftar Pengaduan</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('/pengaduan/tata-cara') }}">Tata Cara</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('/pengaduan') }}">Daftar Pengaduan</a></li>
+                    <!-- <li class="nav-item"><a class="nav-link" href="{{ url('/pengaduan/tata-cara') }}">Tata Cara</a></li> -->
                     <li class="nav-item"><a class="nav-link" href="{{ url('/') }}">Logout</a></li>
                 </ul>
             </div>
@@ -115,10 +115,10 @@
         <p class="mt-3 mb-4">
             Laporkan keluhan, sampaikan aspirasi, dan bantu pemerintah membangun layanan publik yang lebih baik.
         </p>
-        <a href="{{ url('/pengaduan') }}" class="btn btn-primary btn-custom me-2">
+        <a href="{{ url('/buat-pengaduan') }}" class="btn btn-primary btn-custom me-2">
             <i class="bi bi-pencil-square"></i> Buat Pengaduan
         </a>
-        <a href="{{ url('/daftar-pengaduan') }}" class="btn btn-outline-primary btn-custom">
+        <a href="{{ url('/pengaduan') }}" class="btn btn-outline-primary btn-custom">
             <i class="bi bi-list-ul"></i> Daftar Pengaduan
         </a>
     </div>

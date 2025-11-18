@@ -13,7 +13,7 @@ Route::get('/', function () {
 })->name('login');
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login'])->name('login');
+Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 Route::get('/home', function () {
     return view('home');
 })->name('home');

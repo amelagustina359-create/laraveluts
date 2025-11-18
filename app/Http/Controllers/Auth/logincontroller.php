@@ -4,31 +4,46 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
     public function showLoginForm()
     {
-        return view('login');
+        // sesuaikan nama view Anda: resources/views/auth/login.blade.php atau resources/views/login.blade.php
+        return view('login') ?? view('login');
     }
-    public function login(Request $request) : RedirectResponse
+
+    public function login(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => 'required|name',
+            'email'    => 'required|email',
             'password' => 'required|min:6',
         ]);
 
-        $user = \DB::table(table: 'users')->where( 'name', $request->name)->first();
-        // Cek input sederhana (belum pakai database)
-        $email = $request->email;
-        $password = $request->password;
+        $credentials = $request->only('email', 'password');
 
-        // Contoh login manual (dummy)
-        if ($email === 'admin@gmail.com' && $password === '123456') {
-            return redirect()->route('home');
+        if (Auth::attempt($credentials, $request->filled('remember'))) {
+            $request->session()->regenerate();
+            return redirect()->intended(route('home'));
         }
 
-        // Kalau gagal login
-        return back()->with('error', 'Email atau password salah!');
+        return back()
+            ->withInput($request->only('email', 'remember'))
+            ->with('error', 'Email atau password salah!');
+    }
+
+    public function logout(Request $request): RedirectResponse
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login')->with('success', 'Anda telah logout.');
+    }
+    public function store()
+    {
+        return view('home');
     }
 }
