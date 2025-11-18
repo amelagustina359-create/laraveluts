@@ -23,13 +23,13 @@ Route::get('/forgot-password', function () {
 })->name('password.request');
 
 
-// ...existing code...
+
 
 Route::get('/pengaduan/tata-cara', function () {
     return view()->file(resource_path('views/pengaduan.tata_cara/create.blade.php'));
 })->name('pengaduan.tata_cara');
 // ...existing code...
-// CRUD routes for pengaduan (pastikan controller punya semua metode)
+
 Route::resource('pengaduan', PengaduanController::class);
 
 
