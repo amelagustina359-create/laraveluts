@@ -32,3 +32,10 @@ Route::get('/pengaduan/tata-cara', function () {
 // CRUD routes for pengaduan (pastikan controller punya semua metode)
 Route::resource('pengaduan', PengaduanController::class);
 
+
+// ...existing code...
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
+// ...existing code...
+
