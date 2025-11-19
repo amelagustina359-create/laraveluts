@@ -27,7 +27,7 @@
                         <td>{{ $p['nama'] ?? '-' }}</td>
                         <td>{{ $p['email'] ?? '-' }}</td>
                         <td>{{ $p['telepon'] ?? '-' }}</td>
-                        <td style="white-space:pre-wrap; max-width:420px;">{{ $p['pesan'] ?? '-' }}</td>
+                        <td style="white-space:pre-wrap; max-width:400px;">{{ $p['pesan'] ?? '-' }}</td>
                         <td>{{ $p['created_at'] ?? '-' }}</td>
                     </tr>
                 @endforeach

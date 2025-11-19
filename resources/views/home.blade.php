@@ -142,12 +142,16 @@
     </nav>
 
     <!-- HERO SECTION with attractive image background -->
-    <div class="hero">
+    <div class="container hero">
+        @if(session('success'))
+            <div class="alert alert-success text-center">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <div class="hero-content">
-            <h1>Selamat Datang di Sistem Pengaduan Masyarakat</h1>
-            <p class="mt-3 mb-4">
-                Laporkan keluhan, sampaikan aspirasi, dan bantu pemerintah membangun layanan publik yang lebih baik.
-            </p>
+            <h1 class="mt-2">Selamat Datang di Sistem Pengaduan Masyarakat</h1>
+            <p class="mt-3 mb-4">Laporkan keluhan, sampaikan aspirasi, dan bantu pemerintah membangun layanan publik yang lebih baik.</p>
             
         </div>
     </div>

@@ -5,6 +5,14 @@ use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\MasyarakatController;
 use App\Http\Controllers\TanggapanController;
+use Illuminate\Support\Facades\File;
+use Illuminate\Http\Request;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+*/
 
 Route::resource('masyarakat', MasyarakatController::class);
 
@@ -14,6 +22,7 @@ Route::get('/', function () {
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'store'])->name('login.store');
+
 Route::get('/home', function () {
     return view('home');
 })->name('home');
@@ -34,19 +43,37 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
-// gunakan ContactController yang dibuat di bawah
+/*
+| Contact (user) -> form and submit
+*/
 Route::get('/kontak', [ContactController::class, 'index'])->name('kontak');
 Route::post('/kontak', [ContactController::class, 'store'])->name('kontak.send');
 
-// route admin untuk melihat pesan (membaca dari storage/contacts.json)
+/*
+| Admin: lihat dan hapus pesan
+*/
 Route::get('/admin/pesan', function () {
     $path = storage_path('app/contacts.json');
     $pesan = [];
-    if (file_exists($path)) {
-        $json = file_get_contents($path);
-        $pesan = json_decode($json, true) ?? [];
+    if (File::exists($path)) {
+        $pesan = json_decode(File::get($path), true) ?: [];
+        $pesan = array_reverse($pesan);
     }
     return view('admin.pesan', compact('pesan'));
 })->name('admin.pesan');
 
-Route::post('/kontak', [ContactController::class, 'store'])->name('kontak.store');
+Route::post('/admin/pesan/hapus/{index}', function (Request $request, $index) {
+    $path = storage_path('app/contacts.json');
+    if (!File::exists($path)) {
+        return redirect()->route('admin.pesan')->with('error', 'File pesan tidak ditemukan.');
+    }
+    $all = json_decode(File::get($path), true) ?: [];
+    $all = array_reverse($all);
+    if (!isset($all[$index])) {
+        return redirect()->route('admin.pesan')->with('error', 'Pesan tidak ditemukan.');
+    }
+    array_splice($all, $index, 1);
+    $all = array_reverse($all);
+    File::put($path, json_encode($all, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE));
+    return redirect()->route('admin.pesan')->with('success', 'Pesan berhasil dihapus.');
+})->name('admin.pesan.delete');
