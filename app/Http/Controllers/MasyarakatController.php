@@ -67,6 +67,7 @@ class MasyarakatController extends Controller
 
         return redirect()->route('masyarakat.index')->with('success', 'Data masyarakat berhasil dihapus!');
     }
+ 
 }
 
 

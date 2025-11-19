@@ -17,11 +17,16 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
+            <!-- <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a href="{{ route('pengaduan.index') }}" class="nav-link fs-6 fw-normal text-info">Home</a></li>
-                   
-            </div>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('kontak') }}">kontak</a></li> 
+                    <li  class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.pesan') }}">Pesan masuk</a></li>
+                </ul>
+            </div> -->
         </div>
     </nav>
 
