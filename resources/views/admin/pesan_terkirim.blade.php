@@ -2,6 +2,7 @@
 @extends('layouts.app')
 
 @section('content')
+<!-- DEBUG: loaded pesan_terkirim.blade.php -->
 <div class="container mt-4">
     <h3>Pesan Terkirim</h3>
 
@@ -12,7 +13,8 @@
             <table class="table table-striped table-bordered align-middle">
                 <thead class="table-light">
                     <tr>
-                        <th>#</th>
+                        <!-- Ubah '#' menjadi 'No' -->
+                        <th>No</th>
                         <th>Nama</th>
                         <th>Email</th>
                         <th>Telepon</th>
@@ -27,7 +29,7 @@
                         <td>{{ $p['nama'] ?? '-' }}</td>
                         <td>{{ $p['email'] ?? '-' }}</td>
                         <td>{{ $p['telepon'] ?? '-' }}</td>
-                        <td style="white-space:pre-wrap; max-width:400px;">{{ $p['pesan'] ?? '-' }}</td>
+                        <td style="white-space:pre-wrap; max-width:420px;">{{ $p['pesan'] ?? '-' }}</td>
                         <td>{{ $p['created_at'] ?? '-' }}</td>
                     </tr>
                 @endforeach

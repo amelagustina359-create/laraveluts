@@ -59,7 +59,7 @@ Route::get('/admin/pesan', function () {
         $pesan = json_decode(File::get($path), true) ?: [];
         $pesan = array_reverse($pesan);
     }
-    return view('admin.pesan', compact('pesan'));
+    return view('admin.pesan_terkirim', compact('pesan')); // pastikan nama view sesuai file Anda
 })->name('admin.pesan');
 
 Route::post('/admin/pesan/hapus/{index}', function (Request $request, $index) {
