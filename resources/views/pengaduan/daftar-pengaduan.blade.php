@@ -91,6 +91,50 @@
             @endif
 
             @if (isset($pengaduan) && $pengaduan->count())
+
+                {{-- Statistik sederhana (Aritmatika) --}}
+                @php
+                    $total = $pengaduan->count();
+                    $totalChars = $pengaduan->sum(function($p) { return strlen($p->isi_pengaduan ?? ''); });
+                    $avgChars = $total ? round($totalChars / $total) : 0;
+                    $withLampiran = $pengaduan->filter(function($p){ return !empty($p->lampiran); })->count();
+                    $percentWithLampiran = $total ? round($withLampiran * 100 / $total) : 0;
+                    $byCategory = $pengaduan->groupBy('kategori')->map(function($g){ return $g->count(); });
+                @endphp
+
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <div class="card p-2 text-center">
+                            <h6>Total Pengaduan</h6>
+                            <strong class="display-6 text-primary">{{ $total }}</strong>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card p-2 text-center">
+                            <h6>Rata-rata panjang isi (char)</h6>
+                            <strong class="display-6 text-primary">{{ $avgChars }}</strong>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card p-2 text-center">
+                            <h6>Memiliki lampiran</h6>
+                            <strong class="display-6 text-primary">{{ $withLampiran }}</strong>
+                            <div class="text-muted">({{ $percentWithLampiran }}%)</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card p-2 text-center">
+                            <h6>Kategori terbanyak</h6>
+                            @php
+                                $top = $byCategory->sortDesc()->first();
+                                $topName = $byCategory->search($top);
+                            @endphp
+                            <strong class="display-6 text-primary">{{ $topName ?? '-' }}</strong>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Tabel daftar pengaduan --}}
                 <div class="table-responsive">
                     <table class="table table-bordered align-middle text-center">
                         <thead>
@@ -99,19 +143,50 @@
                                 <th>Nama</th>
                                 <th>Email</th>
                                 <th>Kategori</th>
-                                <th>Isi Pengaduan</th>
+                                <th>Isi Pengaduan (char)</th>
+                                <th>Lampiran</th>
                                 <th>Tanggal</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($pengaduan as $index => $item)
-                                <tr>
+                                @php
+                                    $charCount = strlen($item->isi_pengaduan ?? '');
+                                @endphp
+                                <tr class="{{ $loop->even ? 'table-light' : '' }}">
                                     <td>{{ $index + 1 }}</td>
-                                    <td>{{ $item->nama }}</td>
+                                    <td class="text-start">
+                                        {{ $item->nama }}
+                                        @if($charCount > 200)
+                                            <span class="badge bg-warning text-dark ms-2">Panjang</span>
+                                        @endif
+                                    </td>
                                     <td>{{ $item->email }}</td>
-                                    <td>{{ $item->kategori }}</td>
-                                    <td class="text-start">{{ $item->isi_pengaduan }}</td>
-                                    <td>{{ $item->created_at ? $item->created_at->format('d-m-Y H:i') : '-' }}</td>
+                                    <td>
+                                        @if(strtolower($item->kategori) == 'perjalanan dinas')
+                                            <span class="badge bg-primary">{{ $item->kategori }}</span>
+                                        @elseif(strtolower($item->kategori) == 'transportasi umum')
+                                            <span class="badge bg-success">{{ $item->kategori }}</span>
+                                        @else
+                                            <span class="badge bg-secondary">{{ $item->kategori }}</span>
+                                        @endif
+                                    </td>
+                                    <td class="text-start">
+                                        {{ \Illuminate\Support\Str::limit($item->isi_pengaduan, 220) }}
+                                        <div class="text-muted small">({{ $charCount }} char)</div>
+                                    </td>
+                                    <td>
+                                        @if(!empty($item->lampiran))
+                                            <a href="{{ asset('storage/' . $item->lampiran) }}" target="_blank" title="Lihat lampiran">
+                                                <img src="{{ asset('storage/' . $item->lampiran) }}" alt="Lampiran" class="img-thumbnail" style="width:80px;height:80px;object-fit:cover;" loading="lazy">
+                                            </a>
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
+                                    <td>{{ $item->created_at ? $item->created_at->format('d-m-Y H:i') : '-' }}
+                                        <div class="text-muted small">{{ $item->created_at ? $item->created_at->diffForHumans() : '' }}</div>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

@@ -2,11 +2,13 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\PengaduanController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\MasyarakatController;
 use App\Http\Controllers\TanggapanController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Password;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +25,10 @@ Route::get('/', function () {
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 
+// Register routes (untuk pengguna yang belum punya akun)
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
+
 Route::get('/home', function () {
     return view('home');
 })->name('home');
@@ -30,6 +36,19 @@ Route::get('/home', function () {
 Route::get('/forgot-password', function () {
     return view('auth.passwords.email');
 })->name('password.request');
+
+// Handle form submit: send password reset link
+Route::post('/forgot-password', function (Request $request) {
+    $request->validate(['email' => 'required|email']);
+
+    $status = Password::sendResetLink($request->only('email'));
+
+    return $status === Password::RESET_LINK_SENT
+                ? back()->with('status', __($status))
+                : back()->withErrors(['email' => __($status)]);
+})->name('password.email');
+
+
 
 Route::get('/pengaduan/tata-cara', function () {
     return view()->file(resource_path('views/pengaduan.tata_cara/create.blade.php'));
