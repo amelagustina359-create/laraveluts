@@ -43,8 +43,8 @@
                         <hr class="my-4">
                         
                         <div class="text-center">
-                            <p class="mb-0">Belum punya akun? <a href="{{ route('register') }}" class="text-decoration-none">Daftar di sini</a></p>
-
+                            <p class="mb-2">Belum punya akun?</p>
+                            <a href="{{ route('register') }}" class="btn btn-outline-primary">Daftar di sini</a>
                         </div>
                     </div>
                 </div>
