@@ -15,6 +15,13 @@ class PengaduanController extends Controller
         return view('pengaduan.daftar-pengaduan', compact('pengaduan'));
     }
 
+    // Halaman admin untuk petugas melihat semua pengaduan
+    public function adminIndex()
+    {
+        $pengaduan = Pengaduan::orderBy('created_at', 'desc')->get();
+        return view('admin.pengaduan_index', compact('pengaduan'));
+    }
+
     /**
      * Tampilkan form pengaduan baru
      */

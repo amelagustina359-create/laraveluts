@@ -135,6 +135,9 @@
                     <li class="nav-item"><a class="nav-link" href="{{ url('/pengaduan') }}">Daftar Pengaduan</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url('/about') }}">Tentang Kami</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url('/kontak') }}">Kontak</a></li>
+                    @auth
+                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.pengaduan.index') }}">Admin</a></li>
+                    @endauth
                     <li class="nav-item"><a class="nav-link" href="{{ url('/') }}">Logout</a></li>
                 </ul>
             </div>

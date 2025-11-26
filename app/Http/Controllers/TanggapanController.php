@@ -19,10 +19,34 @@ class TanggapanController extends Controller
     public function create($id)
     {
         $pengaduan = Pengaduan::findOrFail($id);
-        return view('tanggapan_masyarakat.create');
+        // default public create (if any) -- but admin should use createFor
+        return view('tanggapan_masyarakat.create', compact('pengaduan'));
     }
 
     public function store(Request $request, $id)
+    {
+        $request->validate([
+            'petugas' => 'required',
+            'isi_tanggapan' => 'required'
+        ]);
+        Tanggapan::create([
+            'pengaduan_id' => $id,
+            'petugas' => $request->petugas,
+            'isi_tanggapan' => $request->isi_tanggapan,
+        ]);
+
+        return redirect()->back()->with('success', 'Tanggapan berhasil dikirim!');
+    }
+
+    // Admin: tampilkan form tanggapan untuk pengaduan tertentu
+    public function createFor($id)
+    {
+        $pengaduan = Pengaduan::findOrFail($id);
+        return view('admin.tanggapan_create', compact('pengaduan'));
+    }
+
+    // Admin: simpan tanggapan untuk pengaduan tertentu
+    public function storeFor(Request $request, $id)
     {
         $request->validate([
             'petugas' => 'required',
@@ -35,6 +59,6 @@ class TanggapanController extends Controller
             'isi_tanggapan' => $request->isi_tanggapan,
         ]);
 
-        return redirect()->route('pengaduan.index')->with('success', 'Tanggapan berhasil dikirim!');
+        return redirect()->route('admin.pengaduan.index')->with('success', 'Tanggapan berhasil dikirim.');
     }
 }
