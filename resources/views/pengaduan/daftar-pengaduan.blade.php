@@ -193,8 +193,43 @@
                     </table>
                 </div>
             @else
-                <p class="text-center text-muted mt-4">Belum ada data pengaduan yang masuk.</p>
-            @endif
+                
+            <table class="table table-bordered table-sm">
+                <thead class="table-light">
+                    <tr>
+                        <th style="width:60px;">No</th>
+                        <th>Nama</th>
+                        <th>Email</th>
+                        <th>Kategori</th>
+                        <th>Isi Pengaduan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Ani Wijaya</td>
+                        <td>ani@example.com</td>
+                        <td>Infrastruktur</td>
+                        <td>Jalan berlubang di depan rumah.</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Budi Santoso</td>
+                        <td>budi@example.com</td>
+                        <td>Penerangan</td>
+                        <td>Lampu jalan tidak menyala sejak seminggu lalu.</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Siti Aminah</td>
+                        <td>siti@example.com</td>
+                        <td>Kebersihan</td>
+                        <td>Sampah menumpuk di selokan RT 05.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+                @endif
 
 
         </div>

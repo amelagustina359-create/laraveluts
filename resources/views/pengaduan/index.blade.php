@@ -1,58 +1,106 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Pengaduan</title>
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
-    <style>
-        .nowrap { white-space: nowrap; }
-        .empty { color: gray; font-style: italic; }
-    </style>
-</head>
-<body class="p-4">
+@extends('layouts.app')
 
-    <div class="container">
-        <h1 class="text-center mb-4">Daftar Pengaduan</h1>
+@section('content')
+<div class="container mt-4">
+    <h1 class="mb-4">Daftar Pengaduan Masyarakat</h1>
 
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-
-        <a href="{{ route('pengaduan.create') }}" class="btn btn-success mb-3">+ Tambah Pengaduan</a>
-
-        @if ($pengaduan->count())
+    @if (isset($pengaduan) && $pengaduan->count())
+        <div class="table-responsive">
             <table class="table table-bordered table-striped">
-                <thead class="thead-dark">
+                <thead class="table-primary">
                     <tr>
-                        <th>No</th>
-                        <th>Nama</th>
+                        <th style="width:60px;">No</th>
+                        <th>Pelapor</th>
                         <th>Email</th>
                         <th>Kategori</th>
                         <th>Isi Pengaduan</th>
-                        <th>Waktu</th>
+                        <th style="width:120px;">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($pengaduan as $index => $item)
+                    @foreach($pengaduan as $index => $p)
                         <tr>
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ $item->nama }}</td>
-                            <td>{{ $item->email }}</td>
-                            <td>{{ $item->kategori }}</td>
-                            <td>{{ $item->isi_pengaduan }}</td>
-                            <td class="nowrap">
-                                {{ $item->created_at ? date('d-m-Y H:i', strtotime($item->created_at)) : '-' }}
+                            <td>{{ $p->nama ?? ($p->user->name ?? '—') }}</td>
+                            <td>{{ $p->email ?? ($p->user->email ?? '—') }}</td>
+                            <td>{{ $p->kategori ?? '—' }}</td>
+                            
+                            <td>
+                                <a href="{{ route('pengaduan.show', $p->id) }}" class="btn btn-sm btn-primary">Lihat</a>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-        @else
-            <p class="empty text-center">Belum ada data pengaduan.</p>
-        @endif
-    </div>
+        </div>
+    @else
+        
+        <div class="card mb-4">
+            <div class="card-body p-3">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr class="table-secondary">
+                                <th style="width:60px;">No</th>
+                                <th>Pelapor</th>
+                                <th>Email</th>
+                                <th>Kategori</th>
+                                <th>Isi Pengaduan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="rounded-circle bg-secondary text-white d-inline-flex justify-content-center align-items-center" style="width:40px;height:40px;font-weight:600;margin-right:10px;">A</div>
+                                        <div>
+                                            <div class="fw-bold">Ani Wijaya</div>
+                                            <div class="text-muted small">Warga RT 02</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>ani@example.com</td>
+                                <td><span class="badge bg-danger">Infrastruktur</span></td>
+                                <td>Jalan berlubang di depan rumah.</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="rounded-circle bg-secondary text-white d-inline-flex justify-content-center align-items-center" style="width:40px;height:40px;font-weight:600;margin-right:10px;">B</div>
+                                        <div>
+                                            <div class="fw-bold">Budi Santoso</div>
+                                            <div class="text-muted small">Warga Perumahan A</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>budi@example.com</td>
+                                <td><span class="badge bg-warning text-dark">Penerangan</span></td>
+                                <td>Lampu jalan tidak menyala sejak seminggu lalu.</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="rounded-circle bg-secondary text-white d-inline-flex justify-content-center align-items-center" style="width:40px;height:40px;font-weight:600;margin-right:10px;">S</div>
+                                        <div>
+                                            <div class="fw-bold">Siti Aminah</div>
+                                            <div class="text-muted small">Warga RT 05</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>siti@example.com</td>
+                                <td><span class="badge bg-success">Kebersihan</span></td>
+                                <td>Sampah menumpuk di selokan RT 05.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    @endif
 
-</body>
-</html>
+</div>
+
+@endsection

@@ -12,6 +12,7 @@ class PengaduanController extends Controller
         // ambil semua pengaduan terbaru
         $pengaduan = Pengaduan::orderBy('created_at', 'desc')->get();
 
+        // pastikan nama view sesuai: gunakan 'pengaduan.daftar-pengaduan' jika file itu yang Anda pakai
         return view('pengaduan.daftar-pengaduan', compact('pengaduan'));
     }
 

@@ -109,8 +109,7 @@
                 </div>
 
                 <button class="btn btn-primary" type="submit">Kirim Pengaduan</button>
-                <a class="btn btn-secondary" href="{{ route('pengaduan.index') }}">Kembali</a>
-            </form>
+     
         </div>
     </div>
 </div>
