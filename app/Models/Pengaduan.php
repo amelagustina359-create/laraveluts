@@ -16,3 +16,4 @@ class Pengaduan extends Model
         'isi_pengaduan',
     ];
 }
+

@@ -56,10 +56,12 @@ Route::get('/pengaduan/tata-cara', function () {
 
 Route::resource('pengaduan', PengaduanController::class);
 Route::resource('tanggapan', TanggapanController::class);
-// Admin routes for petugas
-Route::get('/admin/pengaduan', [PengaduanController::class, 'adminIndex'])->name('admin.pengaduan.index');
-Route::get('/tanggapan/create/{id}', [TanggapanController::class, 'createFor'])->name('tanggapan.createFor');
-Route::post('/tanggapan/store/{id}', [TanggapanController::class, 'storeFor'])->name('tanggapan.storeFor');
+// Admin routes for petugas (protected by auth middleware)
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin/pengaduan', [PengaduanController::class, 'adminIndex'])->name('admin.pengaduan.index');
+    Route::get('/tanggapan/create/{id}', [TanggapanController::class, 'createFor'])->name('tanggapan.createFor');
+    Route::post('/tanggapan/store/{id}', [TanggapanController::class, 'storeFor'])->name('tanggapan.storeFor');
+});
 
 // halaman statis
 Route::get('/about', function () {
@@ -85,18 +87,18 @@ Route::get('/admin/pesan', function () {
     return view('admin.pesan_terkirim', compact('pesan')); // pastikan nama view sesuai file Anda
 })->name('admin.pesan');
 
-// Route::post('/admin/pesan/hapus/{index}', function (Request $request, $index) {
-//     $path = storage_path('app/contacts.json');
-//     if (!File::exists($path)) {
-//         return redirect()->route('admin.pesan')->with('error', 'File pesan tidak ditemukan.');
-//     }
-//     $all = json_decode(File::get($path), true) ?: [];
-//     $all = array_reverse($all);
-//     if (!isset($all[$index])) {
-//         return redirect()->route('admin.pesan')->with('error', 'Pesan tidak ditemukan.');
+//  Route::post('/admin/pesan/hapus/{index}', function (Request $request, $index) {
+//      $path = storage_path('app/contacts.json');
+//  if (!File::exists($path)) {
+//           return redirect()->route('admin.pesan')->with('error', 'File pesan tidak ditemukan.');
+//  }
+//   $all = json_decode(File::get($path), true) ?: [];
+//   $all = array_reverse($all);
+//    if (!isset($all[$index])) {
+//  return redirect()->route('admin.pesan')->with('error', 'Pesan tidak ditemukan.');
 //     }
 //     array_splice($all, $index, 1);
-//     $all = array_reverse($all);
-//     File::put($path, json_encode($all, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE));
-//     return redirect()->route('admin.pesan')->with('success', 'Pesan berhasil dihapus.');
-// })->name('admin.pesan.delete');
+//    $all = array_reverse($all);
+//    File::put($path, json_encode($all, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE));
+//    return redirect()->route('admin.pesan')->with('success', 'Pesan berhasil dihapus.');
+//  })->name('admin.pesan.delete');

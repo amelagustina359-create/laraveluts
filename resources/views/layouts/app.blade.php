@@ -17,7 +17,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('home') }}">Home</a>
                 </li>
-               
+                @auth
+                <li class="nav-item">
+                    
+                @endauth
             </ul>
         </div>
     </div>
