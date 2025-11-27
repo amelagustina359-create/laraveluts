@@ -36,15 +36,15 @@
                             <button type="submit" class="btn btn-primary w-100">Login</button>
                         </form>
                         
-                        <div class="text-center mt-3">
+                        <!-- <div class="text-center mt-3">
                             <a href="{{ route('password.request') }}" class="text-decoration-none">Lupa password?</a>
-                        </div>
+                        </div> -->
                         
                         <hr class="my-4">
                         
                         <div class="text-center">
-                            <p class="mb-0">Belum punya akun?</p>
-
+                            <p class="mb-2">Belum punya akun?</p>
+                            <a href="{{ route('register') }}" class="btn btn-outline-primary">Daftar di sini</a>
                         </div>
                     </div>
                 </div>

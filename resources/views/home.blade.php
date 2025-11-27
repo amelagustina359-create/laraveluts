@@ -135,6 +135,9 @@
                     <li class="nav-item"><a class="nav-link" href="{{ url('/pengaduan') }}">Daftar Pengaduan</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url('/about') }}">Tentang Kami</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url('/kontak') }}">Kontak</a></li>
+                    @auth
+                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.pengaduan.index') }}">Admin</a></li>
+                    @endauth
                     <li class="nav-item"><a class="nav-link" href="{{ url('/') }}">Logout</a></li>
                 </ul>
             </div>
@@ -142,12 +145,16 @@
     </nav>
 
     <!-- HERO SECTION with attractive image background -->
-    <div class="hero">
+    <div class="container hero">
+        @if(session('success'))
+            <div class="alert alert-success text-center">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <div class="hero-content">
-            <h1>Selamat Datang di Sistem Pengaduan Masyarakat</h1>
-            <p class="mt-3 mb-4">
-                Laporkan keluhan, sampaikan aspirasi, dan bantu pemerintah membangun layanan publik yang lebih baik.
-            </p>
+            <h1 class="mt-2">Selamat Datang di Sistem Pengaduan Masyarakat</h1>
+            <p class="mt-3 mb-4">Laporkan keluhan, sampaikan aspirasi, dan bantu pemerintah membangun layanan publik yang lebih baik.</p>
             
         </div>
     </div>

@@ -15,9 +15,8 @@
         <div class="collapse navbar-collapse" id="nav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('home') }}">Home</a>
+                    <a class="nav-link" href="{{ route('admin.pesan') }}">pesan terkirim</a>
                 </li>
-               
             </ul>
         </div>
     </div>
