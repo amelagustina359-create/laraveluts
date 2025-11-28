@@ -5,20 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
-
-namespace App\Models;
-
-use Illuminate\Database\Eloquent\Model;
-
 class Kontak extends Model
 {
-    protected $table = 'kontak';
+    use HasFactory;
+
+    protected $table = 'kontaks';
 
     protected $fillable = [
+        'user_id',
         'nama',
         'email',
         'telepon',
-        'pesan'
+        'pesan',
+        'status',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

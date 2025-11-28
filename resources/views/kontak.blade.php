@@ -1,5 +1,4 @@
-
-@extends('layouts.navbar')
+@extends('layouts.app')
 
 @section('content')
 <div class="container mt-4">
@@ -33,6 +32,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Kirim</button>
-    </form>
-</div>
-@endsection
+        </form>
+    </div>
+
+    @endsection

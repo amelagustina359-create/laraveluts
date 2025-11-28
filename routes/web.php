@@ -78,7 +78,7 @@ Route::post('/kontak', [ContactController::class, 'store'])->name('kontak.send')
 /*
 | Admin: lihat dan hapus pesan
 */
-Route::get('/admin/pesan', function () {
+ Route::get('/admin/pesan', function () {
     $path = storage_path('app/contacts.json');
     $pesan = [];
     if (File::exists($path)) {
