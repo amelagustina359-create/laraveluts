@@ -7,54 +7,101 @@ use App\Models\Pengaduan;
 
 class PengaduanController extends Controller
 {
+    // Tampilkan semua pengaduan
     public function index()
     {
-        // ambil semua pengaduan terbaru
-        $pengaduan = Pengaduan::orderBy('created_at', 'desc')->get();
-
-        // pastikan nama view sesuai: gunakan 'pengaduan.daftar-pengaduan' jika file itu yang Anda pakai
-        return view('pengaduan.daftar-pengaduan', compact('pengaduan'));
+        $pengaduan = Pengaduan::latest()->get();
+        return view('pengaduan.index', compact('pengaduan'));
     }
 
-    // Halaman admin untuk petugas melihat semua pengaduan
-    public function adminIndex()
-    {
-        $pengaduan = Pengaduan::orderBy('created_at', 'desc')->get();
-        return view('admin.pengaduan_index', compact('pengaduan'));
-    }
-
-    /**
-     * Tampilkan form pengaduan baru
-     */
+    // Form tambah pengaduan
     public function create()
     {
         return view('pengaduan.create');
     }
 
-    /**
-     * Simpan pengaduan baru
-     */
+    // Simpan data pengaduan
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'nama' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255'],
-            'kategori' => ['required', 'string', 'max:100'],
-            'isi_pengaduan' => ['required', 'string'],
-            'lokasi' => ['nullable', 'string', 'max:255'],
-            'tanggal_perjalanan' => ['nullable', 'date'],
-            'lampiran' => ['nullable', 'image', 'max:2048'],
+        $request->validate([
+            'nama' => 'required',
+            'email' => 'required|email',
+            'kategori' => 'required',
+            'lokasi' => 'nullable',
+            'tanggal_perjalanan' => 'nullable|date',
+            'isi_pengaduan' => 'required',
+            'lampiran' => 'nullable|image|max:2048'
         ]);
 
-        // Tangani upload jika ada
+        $data = $request->all();
+
         if ($request->hasFile('lampiran')) {
-            $path = $request->file('lampiran')->store('lampiran', 'public');
-            $validated['lampiran'] = $path;
+            $data['lampiran'] = $request->file('lampiran')->store('lampiran', 'public');
         }
 
-        Pengaduan::create($validated);
+        Pengaduan::create($data);
 
-        return redirect()->route('pengaduan.index')->with('success', 'Pengaduan berhasil dikirim.');
+        return redirect()->route('pengaduan.index')
+            ->with('success', 'Pengaduan berhasil dikirim!');
+    }
+
+    // Detail pengaduan
+    public function show($id)
+    {
+        $pengaduan = Pengaduan::findOrFail($id);
+        return view('pengaduan.show', compact('pengaduan'));
+    }
+
+    // Form edit
+    public function edit($id)
+    {
+        $pengaduan = Pengaduan::findOrFail($id);
+        return view('pengaduan.edit', compact('pengaduan'));
+    }
+
+    // Update pengaduan
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nama' => 'required',
+            'email' => 'required|email',
+            'kategori' => 'required',
+            'isi_pengaduan' => 'required',
+            'lampiran' => 'nullable|image|max:2048'
+        ]);
+
+        $pengaduan = Pengaduan::findOrFail($id);
+
+        $data = $request->all();
+
+        // update lampiran jika ada file baru
+        if ($request->hasFile('lampiran')) {
+            if ($pengaduan->lampiran && file_exists(storage_path('app/public/' . $pengaduan->lampiran))) {
+                unlink(storage_path('app/public/' . $pengaduan->lampiran));
+            }
+
+            $data['lampiran'] = $request->file('lampiran')->store('lampiran', 'public');
+        }
+
+        $pengaduan->update($data);
+
+        return redirect()->route('pengaduan.index')
+            ->with('success', 'Data pengaduan berhasil diperbarui!');
+    }
+
+    // Hapus pengaduan
+    public function destroy($id)
+    {
+        $pengaduan = Pengaduan::findOrFail($id);
+
+        if ($pengaduan->lampiran && file_exists(storage_path('app/public/' . $pengaduan->lampiran))) {
+            unlink(storage_path('app/public/' . $pengaduan->lampiran));
+        }
+
+        $pengaduan->delete();
+
+        return redirect()->route('pengaduan.index')
+            ->with('success', 'Pengaduan berhasil dihapus!');
     }
     public function edit($id)
 {
@@ -78,4 +125,3 @@ public function destroy($id)
     return redirect()->route('pesan.index')->with('success', 'Data berhasil dihapus');
 }
 }
-

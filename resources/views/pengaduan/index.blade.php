@@ -2,105 +2,162 @@
 
 @section('content')
 <div class="container mt-4">
-    <h1 class="mb-4">Daftar Pengaduan Masyarakat</h1>
 
-    @if (isset($pengaduan) && $pengaduan->count())
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped">
-                <thead class="table-primary">
-                    <tr>
-                        <th style="width:60px;">No</th>
-                        <th>Pelapor</th>
-                        <th>Email</th>
-                        <th>Kategori</th>
-                        <th>Isi Pengaduan</th>
-                        <th style="width:120px;">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($pengaduan as $index => $p)
-                        <tr>
-                            <td>{{ $index + 1 }}</td>
-                            <td>{{ $p->nama ?? ($p->user->name ?? '—') }}</td>
-                            <td>{{ $p->email ?? ($p->user->email ?? '—') }}</td>
-                            <td>{{ $p->kategori ?? '—' }}</td>
-                            
-                            <td>
-                                <a href="{{ route('pengaduan.show', $p->id) }}" class="btn btn-sm btn-primary">Lihat</a>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    @else
-        
-        <div class="card mb-4">
-            <div class="card-body p-3">
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0">
-                        <thead>
-                            <tr class="table-secondary">
-                                <th style="width:60px;">No</th>
-                                <th>Pelapor</th>
-                                <th>Email</th>
-                                <th>Kategori</th>
-                                <th>Isi Pengaduan</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="rounded-circle bg-secondary text-white d-inline-flex justify-content-center align-items-center" style="width:40px;height:40px;font-weight:600;margin-right:10px;">A</div>
-                                        <div>
-                                            <div class="fw-bold">Ani Wijaya</div>
-                                            <div class="text-muted small">Warga RT 02</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>ani@example.com</td>
-                                <td><span class="badge bg-danger">Infrastruktur</span></td>
-                                <td>Jalan berlubang di depan rumah.</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="rounded-circle bg-secondary text-white d-inline-flex justify-content-center align-items-center" style="width:40px;height:40px;font-weight:600;margin-right:10px;">B</div>
-                                        <div>
-                                            <div class="fw-bold">Budi Santoso</div>
-                                            <div class="text-muted small">Warga Perumahan A</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>budi@example.com</td>
-                                <td><span class="badge bg-warning text-dark">Penerangan</span></td>
-                                <td>Lampu jalan tidak menyala sejak seminggu lalu.</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="rounded-circle bg-secondary text-white d-inline-flex justify-content-center align-items-center" style="width:40px;height:40px;font-weight:600;margin-right:10px;">S</div>
-                                        <div>
-                                            <div class="fw-bold">Siti Aminah</div>
-                                            <div class="text-muted small">Warga RT 05</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>siti@example.com</td>
-                                <td><span class="badge bg-success">Kebersihan</span></td>
-                                <td>Sampah menumpuk di selokan RT 05.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+    <h2 class="mb-3">Daftar Pengaduan Masyarakat</h2>
+
+    <a href="{{ route('pengaduan.create') }}" class="btn btn-success mb-3">+ Tambah Data</a>
+
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-</div>
+    <!-- STATISTIK & LOGIKA -->
+    <div class="card mb-4 p-3 bg-light">
+        <h5 class="card-title">📊 Statistik & Analisis</h5>
+        
+        {{-- Aritmatika: Total pengaduan, rata-rata per kategori --}}
+        <div class="row">
+            <div class="col-md-4">
+                <p><strong>Total Pengaduan:</strong> 
+                    {{ $pengaduan->count() }} 
+                    (Hitung: 
+                    @php
+                        $total = 0;
+                        foreach($pengaduan as $item) {
+                            $total += 1;  // Penambahan aritmatika
+                        }
+                    @endphp
+                    {{ $total }})
+                </p>
+            </div>
+            
+            <div class="col-md-4">
+                <p><strong>ID Terbesar:</strong>
+                    @php
+                        $maxId = 0;
+                        foreach($pengaduan as $item) {
+                            if($item->id > $maxId) {  // Logika perbandingan
+                                $maxId = $item->id;
+                            }
+                        }
+                    @endphp
+                    {{ $maxId ?? 'N/A' }}
+                </p>
+            </div>
+            
+            <div class="col-md-4">
+                <p><strong>Jumlah Kategori Unik:</strong> 
+                    @php
+                        $categories = [];
+                        foreach($pengaduan as $item) {  // Perulangan
+                            if(!in_array($item->kategori, $categories)) {
+                                $categories[] = $item->kategori;
+                            }
+                        }
+                    @endphp
+                    {{ count($categories) }}
+                </p>
+            </div>
+        </div>
+    </div>
 
+    <!-- TABEL PENGADUAN -->
+    <table class="table table-bordered table-striped">
+        <thead class="table-primary">
+            <tr>
+                <th>No</th>
+                <th>Nama</th>
+                <th>Email</th>
+                <th>Kategori</th>
+                <th>Isi Pengaduan</th>
+                <th>Status</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @forelse($pengaduan as $p)
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $p->nama }}</td>
+                    <td>{{ $p->email }}</td>
+                    <td>
+                        <span class="badge 
+                            @if($p->kategori === 'Infrastruktur') bg-danger
+                            @elseif($p->kategori === 'Lingkungan') bg-warning text-dark
+                            @elseif($p->kategori === 'Layanan') bg-info
+                            @elseif($p->kategori === 'Kesehatan') bg-success
+                            @elseif($p->kategori === 'Keamanan') bg-dark
+                            @else bg-secondary
+                            @endif
+                        ">
+                            {{ $p->kategori }}
+                        </span>
+                    </td>
+                    <td>{{ Str::limit($p->isi_pengaduan ?? '', 50) }}</td>
+                    <td>
+                        @php
+                            $panjangIsi = strlen($p->isi_pengaduan ?? '');
+                            $statusTeks = '';
+                            $badgeClass = '';
+                            
+                            // Logika: klasifikasi berdasarkan panjang isi
+                            if($panjangIsi < 20) {
+                                $statusTeks = 'Singkat';
+                                $badgeClass = 'bg-warning text-dark';
+                            } elseif($panjangIsi < 100) {
+                                $statusTeks = 'Normal';
+                                $badgeClass = 'bg-info';
+                            } else {
+                                $statusTeks = 'Detail';
+                                $badgeClass = 'bg-success';
+                            }
+                        @endphp
+                        <span class="badge {{ $badgeClass }}">{{ $statusTeks }}</span>
+                    </td>
+                    <td>
+                        <a href="{{ route('pengaduan.edit', $p->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                        <form action="{{ route('pengaduan.destroy', $p->id) }}" method="POST" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <button onclick="return confirm('Yakin hapus?')" class="btn btn-sm btn-danger">Hapus</button>
+                        </form>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="7" class="text-center text-muted">Belum ada pengaduan. <a href="{{ route('pengaduan.create') }}">Tambah sekarang</a>.</td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
+
+    <!-- RINGKASAN KATEGORI (PERULANGAN & ARITMATIKA) -->
+    <div class="card mt-4 p-3">
+        <h5 class="card-title">📈 Ringkasan per Kategori</h5>
+        <ul class="list-group">
+            @php
+                $categoryCount = [];
+                // Perulangan: hitung per kategori
+                foreach($pengaduan as $item) {
+                    $cat = $item->kategori ?? 'Lainnya';
+                    if(!isset($categoryCount[$cat])) {
+                        $categoryCount[$cat] = 0;
+                    }
+                    $categoryCount[$cat] += 1;  // Aritmatika: penambahan
+                }
+            @endphp
+
+            @forelse($categoryCount as $cat => $count)
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span><strong>{{ $cat }}</strong></span>
+                    <span class="badge bg-primary rounded-pill">{{ $count }} pengaduan</span>
+                </li>
+            @empty
+                <li class="list-group-item text-muted">Tidak ada kategori.</li>
+            @endforelse
+        </ul>
+    </div>
+
+</div>
 @endsection

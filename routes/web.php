@@ -51,6 +51,7 @@ Route::post('/forgot-password', function (Request $request) {
                 : back()->withErrors(['email' => __($status)]);
 })->name('password.email');
 
+<<<<<<< HEAD
 
 
 
@@ -63,6 +64,19 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tanggapan/create/{id}', [TanggapanController::class, 'createFor'])->name('tanggapan.createFor');
     Route::post('/tanggapan/store/{id}', [TanggapanController::class, 'storeFor'])->name('tanggapan.storeFor');
 });
+=======
+Route::resource('pengaduan', PengaduanController::class);
+Route::resource('tanggapan', TanggapanController::class);
+
+
+// Admin routes for petugas
+Route::get('/admin/pengaduan', [PengaduanController::class, 'adminIndex'])->name('admin.pengaduan.index');
+Route::get('/tanggapan/create/{id}', [TanggapanController::class, 'createFor'])->name('tanggapan.createFor');
+Route::post('/tanggapan/store/{id}', [TanggapanController::class, 'storeFor'])->name('tanggapan.storeFor');
+>>>>>>> 59dc0fed06c2631592220246925212674536abf8
+
+
+
 
 // halaman statis
 Route::get('/about', function () {

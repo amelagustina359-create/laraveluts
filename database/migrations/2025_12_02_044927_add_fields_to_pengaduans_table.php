@@ -7,23 +7,6 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     public function up(): void
-<<<<<<< HEAD
-{
-    Schema::create('pengaduans', function (Blueprint $table) {
-        $table->id();
-        $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-
-        $table->string('nama');
-        $table->string('email');
-        $table->string('kategori');
-        $table->text('isi_pengaduan');
-        $table->timestamps();
-    });
-}
-    /**
-     * Reverse the migrations.
-     */
-=======
     {
         Schema::table('pengaduans', function (Blueprint $table) {
 
@@ -34,7 +17,6 @@ return new class extends Migration
         });
     }
 
->>>>>>> 59dc0fed06c2631592220246925212674536abf8
     public function down(): void
     {
         Schema::table('pengaduans', function (Blueprint $table) {
