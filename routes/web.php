@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\MasyarakatController;
 use App\Http\Controllers\TanggapanController;
+use App\Http\Controllers\PesanController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Password;
 */
 
 Route::resource('masyarakat', MasyarakatController::class);
+
 
 Route::get('/', function () {
     return view('login');
@@ -51,9 +53,7 @@ Route::post('/forgot-password', function (Request $request) {
 
 
 
-Route::get('/pengaduan/tata-cara', function () {
-    return view()->file(resource_path('views/pengaduan.tata_cara/create.blade.php'));
-})->name('pengaduan.tata_cara');
+
 
 Route::resource('pengaduan', PengaduanController::class);
 Route::resource('tanggapan', TanggapanController::class);
@@ -72,21 +72,32 @@ Route::get('/about', function () {
 /*
 | Contact (user) -> form and submit
 */
-Route::get('/kontak', [ContactController::class, 'index'])->name('kontak');
+
+
+Route::get('/kontak', [ContactController::class, 'showForm'])->name('kontak');
 Route::post('/kontak', [ContactController::class, 'store'])->name('kontak.send');
 
+
+
+
 /*
-| Admin: lihat dan hapus pesan
+| Pesan (Admin)
 */
- Route::get('/admin/pesan', function () {
-    $path = storage_path('app/contacts.json');
-    $pesan = [];
-    if (File::exists($path)) {
-        $pesan = json_decode(File::get($path), true) ?: [];
-        $pesan = array_reverse($pesan);
-    }
-    return view('admin.pesan_terkirim', compact('pesan')); // pastikan nama view sesuai file Anda
-})->name('admin.pesan');
+
+// Admin
+Route::prefix('admin')->group(function () {
+    Route::get('/pesan', [PesanController::class, 'index'])->name('admin.pesan');
+    Route::get('/pesan/{id}/edit', [PesanController::class, 'edit'])->name('admin.pesan.edit');
+    Route::put('/pesan/{id}', [PesanController::class, 'update'])->name('admin.pesan.update');
+    Route::delete('/pesan/{id}', [PesanController::class, 'destroy'])->name('admin.pesan.destroy');
+});
+
+
+Route::post('/kirim-pengaduan', [PengaduanController::class, 'store'])->name('pengaduan.store');
+Route::get('/pesan-terkirim', [PengaduanController::class, 'index'])->name('pengaduan.index');
+
+
+
 
 //  Route::post('/admin/pesan/hapus/{index}', function (Request $request, $index) {
 //      $path = storage_path('app/contacts.json');

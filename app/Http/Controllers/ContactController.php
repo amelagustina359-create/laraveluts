@@ -3,14 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Contact;
 use Illuminate\Support\Facades\File;
 
 class ContactController extends Controller
 {
-    public function index()
-    {
-        return view('kontak'); // jangan kirim $pesan ke view kontak
-    }
+   public function index()
+{
+    // Ambil semua data pesan terbaru
+    $pesan = Contact::latest()->get();
+
+    // Tampilkan view pesan.blade.php (halaman daftar pesan)
+    return view('pesan', compact('pesan'));
+}
+
 
     public function store(Request $request)
     {
@@ -21,14 +27,11 @@ class ContactController extends Controller
             'pesan' => 'required',
         ]);
 
-        $file = storage_path('app/contacts.json');
-        $all = [];
-        if (File::exists($file)) {
-            $all = json_decode(File::get($file), true) ?: [];
-        }
-        $all[] = array_merge($data, ['created_at' => now()->toDateTimeString()]);
-        File::put($file, json_encode($all, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE));
+        // Tambahkan user_id (nullable)
+        $data['user_id'] = null;
 
-        return redirect()->route('home')->with('success','Pesan berhasil dikirim.');
+        Contact::create($data);
+
+        return redirect()->route('admin.pesan')->with('success', 'Pesan berhasil dikirim.');
     }
 }

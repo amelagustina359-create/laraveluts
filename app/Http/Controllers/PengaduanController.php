@@ -56,5 +56,26 @@ class PengaduanController extends Controller
 
         return redirect()->route('pengaduan.index')->with('success', 'Pengaduan berhasil dikirim.');
     }
+    public function edit($id)
+{
+    $data = Pengaduan::findOrFail($id);
+    return view('admin.edit', compact('data'));
+}
+
+public function update(Request $request, $id)
+{
+    $data = Pengaduan::findOrFail($id);
+    $data->update($request->all());
+
+    return redirect()->route('pesan.index')->with('success', 'Data berhasil diupdate');
+}
+
+public function destroy($id)
+{
+    $data = Pengaduan::findOrFail($id);
+    $data->delete();
+
+    return redirect()->route('pesan.index')->with('success', 'Data berhasil dihapus');
+}
 }
 

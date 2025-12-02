@@ -5,23 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Kontak extends Model
+class Pesan extends Model
 {
     use HasFactory;
 
-    protected $table = 'kontaks';
+    // tabel yang digunakan
+    protected $table = 'pesan';
 
     protected $fillable = [
-        'user_id',
         'nama',
         'email',
         'telepon',
-        'pesan',
-        'status',
+        'pesan'
     ];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
 }

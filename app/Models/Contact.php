@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Kategori extends Model
+class Contact extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'nama',
-        'keterangan',
-    ];
+    protected $table = 'contacts';
 
-    public function pengaduans()
-    {
-        return $this->hasMany(Pengaduan::class, 'kategori_id');
-    }
+    protected $fillable = [
+        'user_id',
+        'nama',
+        'email',
+        'telepon',
+        'pesan'
+    ];
 }

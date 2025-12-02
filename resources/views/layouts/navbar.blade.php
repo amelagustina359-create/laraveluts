@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -9,7 +8,8 @@
 </head>
 <body class="bg-light">
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">Pengaduan Masyarakat</a>
         <div class="collapse navbar-collapse" id="nav">
