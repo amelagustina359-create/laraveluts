@@ -49,18 +49,17 @@ Route::post('/forgot-password', function (Request $request) {
                 : back()->withErrors(['email' => __($status)]);
 })->name('password.email');
 
-
-
-Route::get('/pengaduan/tata-cara', function () {
-    return view()->file(resource_path('views/pengaduan.tata_cara/create.blade.php'));
-})->name('pengaduan.tata_cara');
-
 Route::resource('pengaduan', PengaduanController::class);
 Route::resource('tanggapan', TanggapanController::class);
+
+
 // Admin routes for petugas
 Route::get('/admin/pengaduan', [PengaduanController::class, 'adminIndex'])->name('admin.pengaduan.index');
 Route::get('/tanggapan/create/{id}', [TanggapanController::class, 'createFor'])->name('tanggapan.createFor');
 Route::post('/tanggapan/store/{id}', [TanggapanController::class, 'storeFor'])->name('tanggapan.storeFor');
+
+
+
 
 // halaman statis
 Route::get('/about', function () {

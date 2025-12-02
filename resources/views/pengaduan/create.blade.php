@@ -109,6 +109,7 @@
                 </div>
 
                 <button class="btn btn-primary" type="submit">Kirim Pengaduan</button>
+                <a href="{{ route('pengaduan.index') }}" class="btn btn-secondary mt-2">Lihat Semua Pengaduan</a>
      
         </div>
     </div>
