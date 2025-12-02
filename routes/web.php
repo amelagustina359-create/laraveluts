@@ -51,7 +51,6 @@ Route::post('/forgot-password', function (Request $request) {
                 : back()->withErrors(['email' => __($status)]);
 })->name('password.email');
 
-<<<<<<< HEAD
 
 
 
@@ -64,19 +63,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tanggapan/create/{id}', [TanggapanController::class, 'createFor'])->name('tanggapan.createFor');
     Route::post('/tanggapan/store/{id}', [TanggapanController::class, 'storeFor'])->name('tanggapan.storeFor');
 });
-=======
-Route::resource('pengaduan', PengaduanController::class);
-Route::resource('tanggapan', TanggapanController::class);
-
-
-// Admin routes for petugas
-Route::get('/admin/pengaduan', [PengaduanController::class, 'adminIndex'])->name('admin.pengaduan.index');
-Route::get('/tanggapan/create/{id}', [TanggapanController::class, 'createFor'])->name('tanggapan.createFor');
-Route::post('/tanggapan/store/{id}', [TanggapanController::class, 'storeFor'])->name('tanggapan.storeFor');
->>>>>>> 59dc0fed06c2631592220246925212674536abf8
-
-
-
 
 // halaman statis
 Route::get('/about', function () {
@@ -94,16 +80,18 @@ Route::post('/kontak', [ContactController::class, 'store'])->name('kontak.send')
 
 
 
+
 /*
 | Pesan (Admin)
 */
 
-// Admin
+
+
 Route::prefix('admin')->group(function () {
-    Route::get('/pesan', [PesanController::class, 'index'])->name('admin.pesan');
-    Route::get('/pesan/{id}/edit', [PesanController::class, 'edit'])->name('admin.pesan.edit');
-    Route::put('/pesan/{id}', [PesanController::class, 'update'])->name('admin.pesan.update');
-    Route::delete('/pesan/{id}', [PesanController::class, 'destroy'])->name('admin.pesan.destroy');
+    Route::get('/pesan', [ContactController::class, 'index'])->name('admin.pesan');
+    Route::get('/pesan/{id}/edit', [ContactController::class, 'edit'])->name('admin.pesan.edit');
+    Route::put('/pesan/{id}', [ContactController::class, 'update'])->name('admin.pesan.update');
+    Route::delete('/pesan/{id}', [ContactController::class, 'destroy'])->name('admin.pesan.destroy');
 });
 
 

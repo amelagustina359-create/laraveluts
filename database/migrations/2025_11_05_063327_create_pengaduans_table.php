@@ -6,8 +6,10 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
-<<<<<<< HEAD
 {
     Schema::create('pengaduans', function (Blueprint $table) {
         $table->id();
@@ -23,24 +25,8 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-=======
-    {
-        Schema::table('pengaduans', function (Blueprint $table) {
-
-            // Tambahkan kolom yang belum ada
-            $table->string('lokasi')->nullable();
-            $table->date('tanggal_perjalanan')->nullable();
-            $table->string('lampiran')->nullable();
-        });
-    }
-
->>>>>>> 59dc0fed06c2631592220246925212674536abf8
     public function down(): void
     {
-        Schema::table('pengaduans', function (Blueprint $table) {
-
-            // Hapus kolom jika rollback
-            $table->dropColumn(['lokasi', 'tanggal_perjalanan', 'lampiran']);
-        });
+        Schema::dropIfExists('pengaduans');
     }
 };

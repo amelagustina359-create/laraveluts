@@ -2,45 +2,42 @@
 
 @section('content')
 <div class="container mt-4">
-
-    <h2>Edit Pengaduan</h2>
+    <h3>Edit Pengaduan</h3>
 
     <form action="{{ route('pengaduan.update', $pengaduan->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
-
+        
         <div class="mb-3">
             <label>Nama</label>
-            <input name="nama" class="form-control" value="{{ $pengaduan->nama }}" required>
+            <input type="text" name="nama" class="form-control" value="{{ $pengaduan->nama }}" required>
         </div>
-
+        
         <div class="mb-3">
             <label>Email</label>
-            <input name="email" type="email" class="form-control" value="{{ $pengaduan->email }}" required>
+            <input type="email" name="email" class="form-control" value="{{ $pengaduan->email }}" required>
         </div>
-
+        
         <div class="mb-3">
             <label>Kategori</label>
-            <input name="kategori" class="form-control" value="{{ $pengaduan->kategori }}" required>
+            <input type="text" name="kategori" class="form-control" value="{{ $pengaduan->kategori }}" required>
         </div>
-
+        
         <div class="mb-3">
             <label>Isi Pengaduan</label>
-            <textarea name="isi_pengaduan" class="form-control" rows="5" required>{{ $pengaduan->isi_pengaduan }}</textarea>
+            <textarea name="isi_pengaduan" class="form-control" required>{{ $pengaduan->isi_pengaduan }}</textarea>
         </div>
-
+        
         <div class="mb-3">
-            <label>Lampiran Baru (Opsional)</label>
+            <label>Lampiran</label>
             <input type="file" name="lampiran" class="form-control">
+            @if($pengaduan->lampiran)
+                <p>File saat ini: <a href="{{ asset('storage/' . $pengaduan->lampiran) }}" target="_blank">Lihat</a></p>
+            @endif
         </div>
-
-        @if($pengaduan->lampiran)
-            <p>Lampiran Saat Ini:</p>
-            <img src="{{ asset('storage/'.$pengaduan->lampiran) }}" width="200">
-        @endif
-
-        <button class="btn btn-primary mt-3">Update</button>
+        
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a href="{{ route('pengaduan.index') }}" class="btn btn-secondary">Kembali</a>
     </form>
-
 </div>
 @endsection

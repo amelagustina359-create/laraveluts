@@ -43,3 +43,11 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 }
+use App\Models\User;
+
+// Buat user baru
+User::create([
+    'name' => 'Nana Royhana',
+    'email' => 'nana@example.com',
+    'password' => bcrypt('password123'),
+]);
