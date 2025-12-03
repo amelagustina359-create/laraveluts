@@ -32,10 +32,7 @@
 
                         <!-- Tombol EDIT & HAPUS -->
                         <td>
-                            <a href="{{ route('pesan.edit', $p->id) }}" 
-                               class="btn btn-warning btn-sm">
-                               Edit
-                            </a>
+                           
 
                             <form action="{{ route('pesan.destroy', $p->id) }}" 
                                   method="POST" 

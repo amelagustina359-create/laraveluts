@@ -30,7 +30,7 @@
                             <td style="white-space:pre-wrap; max-width:420px;">{{ $p->pesan }}</td>
                             <td>{{ $p->created_at }}</td>
                             <td>
-                                <a href="{{ route('admin.pesan.edit', $p->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                
                                 <form action="{{ route('admin.pesan.destroy', $p->id) }}" method="POST" style="display:inline-block;">
                                     @csrf
                                     @method('DELETE')

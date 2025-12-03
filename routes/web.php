@@ -20,9 +20,9 @@ use Illuminate\Support\Facades\Password;
 Route::resource('masyarakat', MasyarakatController::class);
 
 
-Route::get('/', function () {
-    return view('login');
-})->name('login');
+// Route::get('/', function () {
+//     return view('login');
+// })->name('login');
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'store'])->name('login.store');
@@ -89,8 +89,8 @@ Route::post('/kontak', [ContactController::class, 'store'])->name('kontak.send')
 
 Route::prefix('admin')->group(function () {
     Route::get('/pesan', [ContactController::class, 'index'])->name('admin.pesan');
-    Route::get('/pesan/{id}/edit', [ContactController::class, 'edit'])->name('admin.pesan.edit');
-    Route::put('/pesan/{id}', [ContactController::class, 'update'])->name('admin.pesan.update');
+    // Route::get('/pesan/{id}/edit', [ContactController::class, 'edit'])->name('admin.pesan.edit');
+    // Route::put('/pesan/{id}', [ContactController::class, 'update'])->name('admin.pesan.update');
     Route::delete('/pesan/{id}', [ContactController::class, 'destroy'])->name('admin.pesan.destroy');
 });
 
