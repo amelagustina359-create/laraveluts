@@ -16,7 +16,7 @@
                     <div class="card-body p-5">
                         <h2 class="text-center mb-4">Login</h2>
                         
-                        <form method="POST" action="{{ route('login') }}">
+                        <form method="POST" action="{{ route('loginn') }}">
                             @csrf
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
@@ -37,8 +37,8 @@
                         </form>
                         
                         <div class="text-center mt-3">
-                            <a href="{{ route('password.request') }}" class="text-decoration-none">Lupa password?</a>
-                        </div>
+                            <!-- <a href="{{ route('password.request') }}" class="text-decoration-none">Lupa password?</a>
+                        </div> -->
                         
                         <hr class="my-4">
                         
